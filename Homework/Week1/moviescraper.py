@@ -6,12 +6,15 @@ This script scrapes IMDB and outputs a CSV file with highest rated movies.
 """
 
 import csv
+import re
 from requests import get
 from requests.exceptions import RequestException
 from contextlib import closing
 from bs4 import BeautifulSoup
 
-TARGET_URL = "https://www.imdb.com/search/title?title_type=feature&release_date=2008-01-01,2018-01-01&num_votes=5000,&sort=user_rating,desc"
+
+TARGET_URL = "https://www.imdb.com/search/title?title_type=feature&release_\
+date=2008-01-01,2018-01-01&num_votes=5000,&sort=user_rating,desc"
 BACKUP_HTML = 'movies.html'
 OUTPUT_CSV = 'movies.csv'
 
@@ -27,22 +30,66 @@ def extract_movies(dom):
     - Runtime (only a number!)
     """
 
-    # ADD YOUR CODE HERE TO EXTRACT THE ABOVE INFORMATION ABOUT THE
-    # HIGHEST RATED MOVIES
-    # NOTE: FOR THIS EXERCISE YOU ARE ALLOWED (BUT NOT REQUIRED) TO IGNORE
-    # UNICODE CHARACTERS AND SIMPLY LEAVE THEM OUT OF THE OUTPUT.
+    # Extract data per movie
+    movies = dom.find_all('div', class_ = 'lister-item mode-advanced')
 
-    return []   # REPLACE THIS LINE AS WELL IF APPROPRIATE
+    # Make an empty list
+    movies_list = []
+
+    # For every movie look into the data
+    for movie in movies:
+
+        # Create an empty dictionary
+        moviedict = {}
+
+        # Fill the dictionary with title and rating
+        moviedict['title'] = movie.h3.a.text
+        moviedict['rating'] = float(movie.strong.text)
+
+        # Year of release, strip the string where necessary, only take
+        # year and append to dictionary
+        year = movie.find("span", class_="lister-item-year text-muted unbold")
+        year = year.get_text()
+        if len(year) > 6:
+            year = year[-6:]
+            year = year.strip("()")
+        else:
+            year = year.strip("()")
+        moviedict['year'] = year
+
+        # Loop over actors/actresses, store as list and make string to
+        # fill in the dictionary
+        actors = movie.find_all(href=re.compile("adv_li_st"))
+        list_actors = []
+        for actor in actors:
+            list_actors.append(actor.text)
+        actors_string = ", ".join(list_actors)
+        moviedict['actors/actresses'] = actors_string
+
+        # Only take the number of runtime and append to dictionary
+        runtime = movie.find("span", class_="runtime")
+        runtime = runtime.get_text()
+        runtime = runtime.split(" ")[0]
+        moviedict['runtime'] = runtime
+
+        # Append dictionary to list
+        movies_list.append(moviedict)
+
+    # Return the list
+    return movies_list
 
 
-def save_csv(outfile, movies):
+def save_csv(outfile, movies_list):
     """
     Output a CSV file containing highest rated movies.
     """
     writer = csv.writer(outfile)
     writer.writerow(['Title', 'Rating', 'Year', 'Actors', 'Runtime'])
 
-    # ADD SOME CODE OF YOURSELF HERE TO WRITE THE MOVIES TO DISK
+    # Write values into csv file
+    for movie in movies_list:
+        writer.writerow([movie["title"], movie["rating"], movie["year"],
+        movie["actors/actresses"], movie["runtime"]])
 
 
 def simple_get(url):
@@ -58,7 +105,8 @@ def simple_get(url):
             else:
                 return None
     except RequestException as e:
-        print('The following error occurred during HTTP GET request to {0} : {1}'.format(url, str(e)))
+        print('The following error occurred during HTTP GET request to {0} : \
+              {1}'.format(url, str(e)))
         return None
 
 
