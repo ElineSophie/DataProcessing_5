@@ -1,0 +1,154 @@
+// Sophie Schubert
+// 10699988
+
+// Get JSON file
+var fileName = "burnout.json";
+var txtFile = new XMLHttpRequest();
+txtFile.onreadystatechange = function() {
+  if (txtFile.readyState === 4 && txtFile.status == 200) {
+    console.log(JSON.parse(txtFile.responseText));
+
+    // Stor data
+    var data = JSON.parse(txtFile.responseText);
+
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    var GRAPH_TOP = 50;
+    var GRAPH_BOTTOM = 375;
+    var GRAPH_LEFT = 50;
+    var GRAPH_RIGHT = 475;
+
+    var GRAPH_HEIGHT = 350;
+    var GRAPH_WIDTH = 450;
+
+    ctx.beginPath();
+    ctx.moveTo( GRAPH_TOP, GRAPH_BOTTOM );
+    ctx.lineTo( GRAPH_RIGHT, GRAPH_BOTTOM );
+    ctx.lineTo( GRAPH_RIGHT, GRAPH_TOP );
+    ctx.stroke();
+
+    data.forEach(function(d){
+      d["Year"] = Number(d["Year"])
+      d["Total Burnout Rate"] = Number(d["Total Burnout Rate"])
+
+    });
+
+
+}
+}
+txtFile.open("GET", fileName);
+txtFile.send();
+
+function createTransform(domain, range){
+// domain is a two-element array of the data bounds [domain_min, domain_max]
+// range is a two-element array of the screen bounds [range_min, range_max]
+// this gives you two equations to solve:
+// range_min = alpha * domain_min + beta
+// range_max = alpha * domain_max + beta
+// a solution would be:
+
+  var domain_min = domain[0]
+  var domain_max = domain[1]
+  var range_min = range[0]
+  var range_max = range[1]
+
+  // formulas to calculate the alpha and the beta
+  var alpha = (range_max - range_min) / (domain_max - domain_min)
+  var beta = range_max - alpha * domain_max
+
+  // returns the function for the linear transformation (y= a * x + b)
+  return function(x){
+    return alpha * x + beta;
+  }
+}
+
+
+// Sophie Schubert
+// 10699988
+
+// Get JSON file
+var fileName = "burnout.json";
+var txtFile = new XMLHttpRequest();
+txtFile.onreadystatechange = function() {
+  if (txtFile.readyState === 4 && txtFile.status == 200) {
+    console.log(JSON.parse(txtFile.responseText));
+
+    // Store JSON data
+    var data = JSON.parse(txtFile.responseText);
+
+    // Make canvas lines
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    var GRAPH_TOP = 50;
+    var GRAPH_BOTTOM = 375;
+    var GRAPH_LEFT = 50;
+    var GRAPH_RIGHT = 475;
+
+    var GRAPH_HEIGHT = 350;
+    var GRAPH_WIDTH = 450;
+
+    ctx.beginPath();
+    ctx.moveTo( GRAPH_TOP, GRAPH_BOTTOM );
+    ctx.lineTo( GRAPH_RIGHT, GRAPH_BOTTOM );
+    ctx.lineTo( GRAPH_RIGHT, GRAPH_TOP );
+    ctx.stroke();
+
+    data.forEach(function(d){
+      d["Year"] = Number(d["Year"])
+      d["Total Burnout Rate"] = Number(d["Total Burnout Rate"])
+
+    });
+
+
+}
+}
+txtFile.open("GET", fileName);
+txtFile.send();
+
+function createTransform(domain, range){
+// domain is a two-element array of the data bounds [domain_min, domain_max]
+// range is a two-element array of the screen bounds [range_min, range_max]
+// this gives you two equations to solve:
+// range_min = alpha * domain_min + beta
+// range_max = alpha * domain_max + beta
+// a solution would be:
+
+  var domain_min = domain[0]
+  var domain_max = domain[1]
+  var range_min = range[0]
+  var range_max = range[1]
+
+  // formulas to calculate the alpha and the beta
+  var alpha = (range_max - range_min) / (domain_max - domain_min)
+  var beta = range_max - alpha * domain_max
+
+  // returns the function for the linear transformation (y= a * x + b)
+  return function(x){
+    return alpha * x + beta;
+  }
+}
+
+
+data.forEach(function(d){
+  var x = createTransform([2005, 2017], [0,300]);
+  var y = createTransform([892, 2029], [300, 0]);
+
+  console.log(x(2006));
+});
+
+
+
+
+  //     // canvas width
+  // var canvas_width = canvas.width;
+  //
+  // // canvas height
+  // var canvas_height = canvas.height;
+  //
+  // // no of vertical grid lines
+  // var num_lines_x = Math.floor(canvas_height/grid_size);
+  //
+  // // no of horizontal grid lines
+  // var num_lines_y = Math.floor(canvas_width/grid_size);
