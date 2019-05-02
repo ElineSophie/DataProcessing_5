@@ -5,3 +5,25 @@ pd.set_option('display.max_rows', 500)
 pd.set_option('display.max_columns', 500)
 pd.set_option('display.width', 1000)
 print(df)
+
+
+# sns.boxplot(df["Infant mortality (per 1000 births)"])
+# plt.show()
+#
+# print(df)
+
+# df = df.sort_values(by=["GDP ($ per capita) dollars"])
+#
+# df = df.sort_values(by=["Infant mortality (per 1000 births)"])
+
+# Calculate the mean, median and mode
+# print(df["GDP ($ per capita) dollars"].mean())
+# print(df["GDP ($ per capita) dollars"].median())
+# print(df["GDP ($ per capita) dollars"].mode())
+
+
+
+    df.set_index("Country", inplace=True)
+    pd.set_option('display.max_rows', 500)
+    pd.set_option('display.max_columns', 500)
+    pd.set_option('display.width', 1000)
