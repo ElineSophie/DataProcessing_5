@@ -123,20 +123,20 @@ function visualisationData(data){
       .text("Education level");
 
   // Make events
-  function mouseOver(d, i , n) {
+  function mouseOverRect(d, i , n) {
                         d3.select(n[i])
                         .attr('fill', "blue")
                       };
                       rect.append("text")
                           .text(d => d.Aandeel);
 
-  function mouseOut(d, i , n){
+  function mouseOutRect(d, i , n){
     d3.select(n[i])
     .attr('fill', "black");
     };
 
   graph.selectAll('rect')
-      .on('mouseover', mouseOver)
-      .on('mouseout', mouseOut);
+      .on('mouseover', mouseOverRect)
+      .on('mouseout', mouseOutRect);
 
 };
