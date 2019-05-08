@@ -1,0 +1,279 @@
+// svg.attr("width", 500).attr("height",50);
+// svg.selectAll("rect")
+//     .data(data)
+//     .enter()
+//     .append("rect")
+//     .attr("width", 30)
+//     .attr("height", function(d) {
+//       var barHeight = d["Aandeel"] * 5;
+//       return barHeight + "px";
+//     });
+
+// d3.select("body").selectAll("div")
+//     .data(data)
+//     .enter()
+//     .append("div")
+//     .attr("class", "bar")
+//     .style("height", function(d) {
+//         var barHeight = d["Aandeel"] * 5;
+//         console.log(d["Aandeel"]);
+//         return barHeight + "px";
+//     })
+//     .style("background-color", "red");
+
+
+// // Create margins and dimensions for the graph
+// var margin = {top: 20, right: 20, bottom: 100, left: 100};
+// var graphWidth = w - margin.left - margin.right;
+// var graphHeight = h - margin.top - margin.bottom
+//
+// // Append a group to svg and save as graph
+// var graph = svg.append("g")
+//                 .attr("width", graphWidth)
+//                 .attr("height", graphHeight)
+//                 .attr('transform', "translate("+ margin.left + "," + margin.top +")");
+
+
+// Add attributes to the rectangles
+rect.enter()
+    .append("rect")
+    .attr("x", function(d, i){
+      return i * (w / data.length)})
+    .attr("y", function(d){return h - d["Aandeel"]})
+    .attr("width", w / data.length - barPadding)
+    .attr("height", function(d) {
+      return d["Aandeel"] * 40;})
+    .attr("fill", "blue");
+
+// Set the text to the bar chart
+svg.selectAll("text")
+    .data(data)
+    .enter()
+    .append("text")
+    .text(function(d){
+      return d["Aandeel"];})
+    .attr("x", function(d, i) {
+      return i * (w / data.length);})
+   .attr("y", function(d) {
+        return h - (d["Aandeel"] * 4);})
+   .attr("font-family", "sans-serif")
+   .attr("font-size", "11px")
+   .attr("fill", "black");
+
+
+};
+
+
+myTextPage();
+loadData();
+
+
+function myTextPage(){
+
+  // Title of html page
+  var head = d3.select("head");
+  var t = head.append("title");
+  t.text("Bar chart for depression rates");
+
+  // Title of bar chart
+  var title = d3.select("body");
+  var h1 = title.append("h1");
+  h1.text("Self-report depression by education level 2014")
+
+  // A bit of text
+  var body = d3.select("body");
+  var h2 = body.append("h2");
+  h2.text("This bar chart is made by Sophie Schubert with studentnummer 10699988.");
+
+  // A short paragraph
+  var b = d3.select("body");
+  var p = body.append("p");
+  p.text("In this bar chart, depression rates according to self-rapportage are being shown.");
+
+};
+
+function loadData(){
+  d3.json("/data/zelfrapportage.json").then(function(data) {
+    visualisationData(data);
+  });
+
+};
+
+function visualisationData(data){
+
+  //Width and height
+  var w = 800;
+  var h = 500;
+  var barPadding = 6;
+
+  var svg = d3.select("body")
+              .append("svg")
+              .attr("width", w)
+              .attr("height", h);
+
+  // Create margins and dimensions for the graph
+  var margin = {top: 40, right: 40, bottom: 100, left: 100};
+  var graphWidth = w - margin.left - margin.right;
+  var graphHeight = h - margin.top - margin.bottom
+
+  // Append a group to svg and save as graph
+  var graph = svg.append('g')
+                  .attr("width", graphWidth)
+                  .attr("height", graphHeight)
+                  .attr('transform', "translate("+ margin.left + "," + margin.top +")");
+
+  var xGroup = graph.append('g')
+                    .attr('transform', `translate(0, ${graphHeight})`);
+
+  var yGroup = graph.append('g');
+
+
+  var yScale = d3.scaleLinear()
+                        .domain([0, d3.max(data, function(d) { return d["Aandeel"]; })])
+                        .range([0, graphHeight]);
+
+  var xScale = d3.scaleBand()
+                .domain(data.map(item => item.Categorie))
+                .range([0, 500])
+                .paddingInner(0.25)
+                .paddingOuter(0.25);
+
+  // Join the data to the rectangles
+  var rect = graph.selectAll("rect")
+                .data(data);
+
+  // Add attributes to the rectangles
+  rect.enter()
+      .append("rect")
+      .attr("x", function(d, i){
+        return i * (w / data.length)})
+      .attr("y", function(d){return h - yScale(d["Aandeel"])})
+      .attr("width", w / data.length - barPadding)
+      .attr("height", function(d) {
+        return d["Aandeel"] * 40;})
+      .attr("fill", "blue");
+
+  // Set the text to the bar chart
+  svg.selectAll("text")
+      .data(data)
+      .enter()
+      .append("text")
+      .text(function(d){
+        return d["Aandeel"];})
+      .attr("x", function(d){return d["Categorie"];})
+     .attr("y", function(d) {
+          return h - (d["Aandeel"] * 4);})
+     .attr("font-family", "sans-serif")
+     .attr("font-size", "11px")
+     .attr("fill", "black");
+
+
+};
+
+
+
+myTextPage();
+loadData();
+
+
+function myTextPage(){
+
+  // Title of html page
+  var head = d3.select("head");
+  var t = head.append("title");
+  t.text("Bar chart for depression rates");
+
+  // Title of bar chart
+  var title = d3.select("body");
+  var h1 = title.append("h1");
+  h1.text("Self-report depression by education level 2014")
+
+  // A bit of text
+  var body = d3.select("body");
+  var h2 = body.append("h2");
+  h2.text("This bar chart is made by Sophie Schubert with studentnummer 10699988.");
+
+  // A short paragraph
+  var b = d3.select("body");
+  var p = body.append("p");
+  p.text("In this bar chart, depression rates according to self-rapportage are being shown.");
+
+};
+
+function loadData(){
+  d3.json("/data/zelfrapportage.json").then(data => {
+    visualisationData(data);
+  });
+
+};
+
+function visualisationData(data){
+
+  //Width and height
+  var w = 800;
+  var h = 500;
+  var barPadding = 6;
+
+  var svg = d3.select("body")
+              .append("svg")
+              .attr("width", w)
+              .attr("height", h);
+
+  // Create margins and dimensions for the graph
+  var margin = {top: 40, right: 40, bottom: 100, left: 100};
+  var graphWidth = w - margin.left - margin.right;
+  var graphHeight = h - margin.top - margin.bottom
+
+  // Append a group to svg and save as graph
+  var graph = svg.append('g')
+                  .attr("width", graphWidth)
+                  .attr("height", graphHeight)
+                  .attr('transform', "translate("+ margin.left + "," + margin.top +")");
+
+  var xGroup = graph.append('g')
+                    .attr('transform', `translate(0, ${graphHeight})`);
+
+  var yGroup = graph.append('g');
+
+
+  var yScale = d3.scaleLinear()
+                        .domain([0, d3.max(data, function(d) { return d["Aandeel"]; })])
+                        .range([0, graphHeight]);
+
+  var xScale = d3.scaleBand()
+                .domain(data.map(d => d.Categorie))
+                .range([0, 500])
+                .paddingInner(0.25)
+                .paddingOuter(0.25);
+
+console.log(data.map(d => d.Categorie));
+  // Join the data to the rectangles
+  var rect = graph.selectAll("rect")
+                .data(data);
+
+  // Add attributes to the rectangles
+  rect.enter()
+      .append("rect")
+      .attr("x", function(d, i){
+        return i * (w / data.length)})
+      .attr("y", d => h - yScale(d["Aandeel"]))
+      .attr("width", w / data.length - barPadding)
+      .attr("height", function(d) {
+        return d["Aandeel"] * 40;})
+      .attr("fill", "blue");
+
+  // Set the text to the bar chart
+  svg.selectAll("text")
+      .data(data)
+      .enter()
+      .append("text")
+      .text(function(d){
+        return d["Aandeel"];})
+      .attr("x",  d => d["Categorie"])
+     .attr("y", d => h - (d["Aandeel"] * 4))
+     .attr("font-family", "sans-serif")
+     .attr("font-size", "11px")
+     .attr("fill", "black");
+
+
+};
