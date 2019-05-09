@@ -35,7 +35,7 @@ function myTextPage(){
 };
 
 function loadData(){
-  d3.json("/data/zelfrapportage.json").then(data => {
+  d3.json("/Homework/Week_4/data/zelfrapportage.json").then(data => {
     visualisationData(data);
   });
 
