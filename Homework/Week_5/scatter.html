@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<!--
+Sophie Schubert - 10699988
+This is the homework assignment for week 5
+-->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="https://d3js.org/colorbrewer.v1.min.js"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="d3/d3-tip.js"></script>
+    <script type="text/javascript" src="scatter.js"></script>
+    <link rel="stylesheet" href="scatter.css">
+    <title>D3 Scatterplot</title>
+  </head>
+  <body>
+    <h1>Scatterplot</h1>
+    <h2>This scatter was made by Sophie Schubert with studentnummer 10699988</h2>
+    <p>It is a two dimensional visualisation with teens living in violent areas
+      on the y axis and teen pregnancies on the x axis. GDP is given as a legend
+      with different coloring. </p>
+    <p>The user can move with the mouse over the
+      dots to see the data. </p>
+    <div>Data:</div>
+    <div><a href="https://stats.oecd.org/SDMX-JSON/data/CWB/AUS+AUT+BEL+BEL-VLG+CAN+CHL+CZE+DNK+EST+FIN+FRA+DEU+GRC+HUN+ISL+IRL+ISR+ITA+JPN+KOR+LVA+LTU+LUX+MEX+NLD+NZL+NOR+POL+PRT+SVK+SVN+ESP+SWE+CHE+TUR+GBR+USA+OAVG+NMEC+BRA+BGR+CHN+COL+CRI+HRV+CYP+IND+IDN+MLT+PER+ROU+RUS+ZAF.CWB11/all?startTime=2010&endTime=2017">Teens in violent areas</a></div>
+    <div><a href="https://stats.oecd.org/SDMX-JSON/data/CWB/AUS+AUT+BEL+BEL-VLG+CAN+CHL+CZE+DNK+EST+FIN+FRA+DEU+GRC+HUN+ISL+IRL+ISR+ITA+JPN+KOR+LVA+LTU+LUX+MEX+NLD+NZL+NOR+POL+PRT+SVK+SVN+ESP+SWE+CHE+TUR+GBR+USA+OAVG+NMEC+BRA+BGR+CHN+COL+CRI+HRV+CYP+IND+IDN+MLT+PER+ROU+RUS+ZAF.CWB46/all?startTime=1960&endTime=2017">Teen pregnancies</a></div>
+    <div><a href="https://stats.oecd.org/SDMX-JSON/data/SNA_TABLE1/AUS+AUT+BEL+CAN+CHL+CZE+DNK+EST+FIN+FRA+DEU+GRC+HUN+ISL+IRL+ISR+ITA+JPN+KOR+LVA+LTU+LUX+MEX+NLD+NZL+NOR+POL+PRT+SVK+SVN+ESP+SWE+CHE+TUR+GBR+USA+EU28+EU15+OECDE+OECD+OTF+NMEC+ARG+BRA+BGR+CHN+COL+CRI+HRV+CYP+IND+IDN+MLT+ROU+RUS+SAU+ZAF+FRME+DEW.B1_GE.HCPC/all?startTime=2012&endTime=2018&dimensionAtObservation=allDimensions">GDP</a></div>
+    <!-- Initialize a select button -->
+    <select id="year" class = "dropdown">
+          <option value="2012">Data for year 2012</option>
+          <option value="2013">Data for year 2013</option>
+          <option value="2014">Data for year 2014</option>
+          <option value="2015">Data for year 2015</option></select>
+  </body>
+</html>

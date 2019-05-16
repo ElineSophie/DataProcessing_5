@@ -1,0 +1,80 @@
+// data_dict = {};
+// data_dict["country"] = key;
+//
+//
+// var y_data= teenVio[key][2]["Datapoint"];
+// data_dict["y_teenVio"] = y_data
+// for (const key of keys){
+//   data_dict = {};
+//   data_dict["country"] = key
+
+// year = "201" + i;
+// all_data["2012"].push(data_dict);
+// console.log(key);
+
+
+//   for (const key of keys_teenVio){
+//     for (const jaren of teenVio[key]){
+//       data_dict = {};
+//
+//       if (jaren["Time"] == "2012" | jaren["Time"] == "2013" | jaren["Time"] == "2014" | jaren["Time"] == "2015"){
+//         // Take specific variables
+//         data_dict["country"] = key
+//         var y_data = jaren["Datapoint"];
+//         data_dict["y_teenVio"] = y_data;
+//         all_data[jaren["Time"]].push(data_dict);
+//       }
+//     }
+//   };
+//   console.log(data_dict);
+//   console.log(all_data);
+//   const keys_teenPreg = Object.keys(teenPreg);
+//
+//   for (const key of keys_teenPreg){
+//     for (const jaren of teenPreg[key]){
+//         if (jaren["Time"] == "2012" | jaren["Time"] == "2013" | jaren["Time"] == "2014" | jaren["Time"] == "2015"){
+//             console.log(jaren);
+//             var x_data = jaren["Datapoint"];
+//             console.log(x_data);
+//             data_dict["x_teenPreg"] = x_data;
+//             all_data[jaren["Time"]].update(data_dict["x_teenPreg"])
+//     }
+//   }
+// };
+
+
+\  // // Parse the data in arrays
+  // var dataset = [];
+  // var x_Pregnancy = [];
+  // var y_Violent = [];
+  // var years = Object.values(data);
+  // years.forEach(function(country){
+  //   data[country].forEach(function(value){
+  //     console.log(value);})});
+  //   x_Pregnancy.push(data[country[0]]);
+  //   y_Violent.push(data[country[1]]);
+  //   console.log(x_Pregnancy)
+  //
+  //   var array_data = [data[country][0], data[country][1]
+  // Join the data to the rectangles
+
+
+  // console.log(all_data);
+  // console.log(Object.entries(all_data["Country"]));
+  //
+  // Object.values(all_data).forEach(function(value){
+  //
+  // });
+
+
+  // // setup fill color
+  // var colorScale = d3.scaleOrdinal()
+  //                     .domain([20000, 110000])
+  //                     .range(['black', '#ccc', '#ccc']);
+
+  // var colorScale = d3.scaleThreshold()
+  //                     .domain(d3.max(data, d => d.GDP) * (1/4), d3.max(data, d => d.GDP) * (2/4),
+  //                             d3.max(data, d => d.GDP) * (3/4))
+  //                     .range(["black", "green", "blue", "yellow"])
+
+  // different colours for different data
