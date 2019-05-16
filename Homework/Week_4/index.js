@@ -124,19 +124,40 @@ function visualisationData(data){
 
   // Make events
   function mouseOverRect(d, i , n) {
+          console.log(d);
+            d3.select("#tim").text(function(){
+                return d.Aandeel + " %";
+            })
                         d3.select(n[i])
                         .attr('fill', "blue")
                       };
-                      rect.append("text")
-                          .text(d => d.Aandeel);
+                      // rect.append("text")
+                      //     .text(d => d.Aandeel);
 
   function mouseOutRect(d, i , n){
     d3.select(n[i])
     .attr('fill', "black");
     };
 
+    var tip = d3.tip()
+    .attr('class', 'd3-tip')
+    .offset([-10, 0])
+    .html(function(d) {
+      return "<strong>Frequency:</strong> <span style='color:red'>" + d.Aandeel + "</span>";
+    })
+
+// var svg = d3.select("body").append("svg")
+//     .attr("width", width + margin.left + margin.right)
+//     .attr("height", height + margin.top + margin.bottom)
+//   .append("g")
+//     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+svg.call(tip);
+
   graph.selectAll('rect')
-      .on('mouseover', mouseOverRect)
-      .on('mouseout', mouseOutRect);
+  .on('mouseover', tip.show)
+      .on('mouseout', tip.hide);
+      // .on('mouseover', mouseOverRect)
+      // .on('mouseout', mouseOutRect);
 
 };
