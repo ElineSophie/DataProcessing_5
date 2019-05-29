@@ -56,7 +56,7 @@ function visualisationData(data){
   // Create margins and dimensions for the graph
   var margin = {top: 40, right: 40, bottom: 120, left: 90};
   var graphWidth = w - margin.left - margin.right;
-  var graphHeight = h - margin.top - margin.bottom
+  var graphHeight = h - margin.top - margin.bottom;
 
   // Append a group to svg and save as graph
   var graph = svg.append('g')

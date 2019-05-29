@@ -80,7 +80,7 @@ def visualisation(cleaned):
     Visualizing a histogram for GDP and a boxplot for infant mortality
     in the same plot.
     """
-    
+
     fig, axs = plt.subplots(1, 2, constrained_layout=True)
     fig.suptitle('Infant Mortality and GDP dollars', fontsize=16)
 

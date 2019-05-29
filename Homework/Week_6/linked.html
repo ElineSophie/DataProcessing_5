@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Linked views</title>
+
+    <!-- Import D3 V5 -->
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script>
+      d3v5 = d3;
+      window.d3 = null;
+    </script>
+    <!-- Import D3 V3 and TopoJSON -->
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+    <script src="d3/datamaps.world.min.js"></script>
+    <script src="d3/d3-tip.js"></script>
+    <script>
+      d3v3 = d3;
+      window.d3 = null;
+    </script>
+    <script type="text/javascript" src="linked.js"></script>
+    <link rel="stylesheet" href="linked.css">
+  </head>
+
+  <body>
+    <h1>Linked views</h1>
+    <h2>This linked view was made by Sophie Schubert with studentnummer 10699988</h2>
+    <p> This is a linked view visualization with a map and the happy planet index rank. </p>
+    <p>The user can move with the mouse over the countries to see the index.
+    <br> When the user clicks, a bar chart will show the life Expectancy against
+    the global average life expectancy rank.</p>
+    <div>Data:</div>
+    <div><a href="http://happyplanetindex.org/">Happy planet index</a></div>
+    <div id="datamap" style="position: relative; width: 700px; height: 400px;"></div>
+    <!-- <div class=barcontainer1></div> -->
+    <!-- <div position:relative; width = "100%"; height = "400px"> -->
+    <div width = "50%" height = "400px" style="float:left">
+        <svg id="barcontainer1" width = "100%" height = "400px"></svg>
+    </div >
+    <div width = "50%" height = "400px" style="float:middle">
+       <svg id="barcontainer2" width = "100%" height = "400px"></svg>
+    </div>
+  </body>
+</html>
