@@ -11,14 +11,11 @@ function hpi_index(data){
   var min = Infinity;
   Object.keys(data).forEach(function(key){
       if (data[key]["Happy Planet Index"] > max) {
-          max = data[key]["Happy Planet Index"]}
-  if (data[key]["Happy Planet Index"] < min) {
-      min = data[key]["Happy Planet Index"]
+        max = data[key]["Happy Planet Index"]}
+      if (data[key]["Happy Planet Index"] < min) {
+        min = data[key]["Happy Planet Index"]
     }
   });
-  console.log(max);
-  console.log(min);
-
 
   // Use max and min for color ranging
   var colorScale = d3v5.scaleThreshold()
@@ -50,13 +47,13 @@ function map(hpi){
           popupTemplate: function(geography, data) {
             if(data){
               return '<div class="hoverinfo"><strong>' + data["Country"] +
-              '</strong> <br> Happy Planet Index: ' + data["Happy Planet Index"] + '</br></div>';
+              '</strong> <br>HPI Rank: ' + data["HPI Rank"] +
+              '<br> Happy Planet Index: ' + data["Happy Planet Index"] + '</br></div>';
             }
             else{
-              return "<div class='hoverinfo'><b>Country: </b>",
-                            geography.properties.name, "</br><i>No data",
-                            " available from the Happy Planet Index</i>",
-                            "</div>";
+              return "<div class='hoverinfo'><b>Country: </b>" +
+                            geography.properties.name +
+                            "</br><i>No data available</i></div>";
                 }
           },
         },
@@ -65,20 +62,15 @@ function map(hpi){
             console.log(geography);
             console.log(d)
             if (hpi[geography.id]){
-              console.log(hpi[geography.id])
-              if (hpi[geography.id]["fillKey"] == "Low"){
-                var color = "#f7fcb9";
-              } else if (hpi[geography.id]["fillKey"] == "Medium"){
-                var color = "#addd8e";
-              } else {
-                var color = "#31a354";
-              };
               update(hpi[geography.id]);
-            }
+            };
           })
         }
   });
-  map.legend();
+  map.legend({
+    legendTitle : "Low to high HPI",
+    defaultFillName: "No data available"
+  });
 
 };
 
@@ -87,7 +79,7 @@ function update(x){
   bargraph2(x["Average Wellbeing (0-10)"], x.GlobalAverageWellBeing)
 };
 
-function bargraph1(d, e){
+function bargraph1(lifeexpectancy, globallifeexpectancy){
 
   // Remove any previous graphs
     d3v5.selectAll("rect")
@@ -132,45 +124,49 @@ function bargraph1(d, e){
                         .paddingInner(0.3)
                         .paddingOuter(0.3);
 
-      // Join the data to the rectangles
-      var rect = graph.selectAll("rect")
-                      .data([d, e]);
+    // Join the data to the rectangles
+    var rect = graph.selectAll("rect")
+                    .data([lifeexpectancy, globallifeexpectancy]);
 
-      // Add attributes to the rectangles
-      rect.enter()
-          .append("rect")
-          .attr("width", xScale.bandwidth)
-          .attr("height", d => graphHeight - yScale(d))
-          .attr("fill", "black")
-          .attr("x", (d, i) => xScale(list[i]))
-          .attr("y", d => yScale(d));
+    // Add attributes to the rectangles
+    rect.enter()
+        .append("rect")
+        .attr("width", xScale.bandwidth)
+        .attr("height", d => graphHeight - yScale(d))
+        .attr("fill", "blue")
+        .attr("x", (d, i) => xScale(list[i]))
+        .attr("y", d => yScale(d));
 
 
-      // Create and call the axes
-      var x = d3v5.axisBottom(xScale);
-      var y = d3v5.axisLeft(yScale)
-                .ticks(3);
+    // Create and call the axes
+    var x = d3v5.axisBottom(xScale);
+    var y = d3v5.axisLeft(yScale)
+              .ticks(5);
 
-      xAxis.call(x);
-      yAxis.call(y);
+    xAxis.call(x);
+    yAxis.call(y);
 
-      // Append text to the graph
-      svg1.append("text")
-          .attr("x", (-h / 2))
-          .attr("y", 50)
-          .attr("transform", "rotate(-90)")
-          .attr("text-anchor", "middle")
-          .text("Self-rapportage in %");
+    // Append text to the graph
+    svg1.append("text")
+        .attr("x", (-h / 2.2))
+        .attr("y", 50)
+        .attr("transform", "rotate(-90)")
+        .attr("text-anchor", "middle")
+        .style("font-size", "12px")
+        .style("font-family", "sans-serif")
+        .text("Average Life Expectancy");
 
-      svg1.append("text")
-          .attr("x", w / 2)
-          .attr('y', 300)
-          .attr('text-anchor', 'middle')
-          .text("Education level");
+    svg1.append("text")
+        .attr("x", w / 1.8)
+        .attr('y', 320)
+        .attr('text-anchor', 'middle')
+        .style("font-size", "12px")
+        .style("font-family", "sans-serif")
+        .text("Country vs. Global rate");
 
 };
 
-function bargraph2(d, e){
+function bargraph2(wellbeing, globalwellbeing){
 
     // Remove any previous graphs
     d3v5.selectAll("rect2")
@@ -216,7 +212,7 @@ function bargraph2(d, e){
 
     // Join the data to the rectangles
     var rect2 = graph.selectAll("rect")
-                    .data([d, e]);
+                    .data([wellbeing, globalwellbeing]);
 
     // Add attributes to the rectangles
     rect2.enter()
@@ -227,14 +223,29 @@ function bargraph2(d, e){
         .attr("x", (d, i) => xScale(list[i]))
         .attr("y", d => yScale(d));
 
-      // Create and call the axes
-      var x = d3v5.axisBottom(xScale);
-      var y = d3v5.axisLeft(yScale)
-                .ticks(3);
+    // Create and call the axes
+    var x = d3v5.axisBottom(xScale);
+    var y = d3v5.axisLeft(yScale)
+              .ticks(5);
 
-      xAxis.call(x);
-      yAxis.call(y);
+    xAxis.call(x);
+    yAxis.call(y);
 
+    // Append text to the graph
+    svg2.append("text")
+        .attr("x", (-h / 2.2))
+        .attr("y", 50)
+        .attr("transform", "rotate(-90)")
+        .attr("text-anchor", "middle")
+        .style("font-size", "12px")
+        .style("font-family", "sans-serif")
+        .text("Average Well Being (0-10)");
 
-
+    svg2.append("text")
+        .attr("x", w / 1.8)
+        .attr('y', 320)
+        .attr('text-anchor', 'middle')
+        .style("font-size", "12px")
+        .style("font-family", "sans-serif")
+        .text("Country vs. Global rate");
 };

@@ -27,19 +27,20 @@
   <body>
     <h1>Linked views</h1>
     <h2>This linked view was made by Sophie Schubert with studentnummer 10699988</h2>
-    <p> This is a linked view visualization with a map and the happy planet index rank. </p>
-    <p>The user can move with the mouse over the countries to see the index.
-    <br> When the user clicks, a bar chart will show the life Expectancy against
-    the global average life expectancy rank.</p>
+    <p> This is a linked view visualization with a map and the happy planet index rank.
+    <br>The user can move with the mouse over the countries to see the happy planet index
+    as well as the ranking. </p>
+    <br> When the user clicks on a specific country, two bar charts will be provided
+    <br> The first barchart shows the life expectancy rate of that country against the global
+    life expectancy rate. <br>The second barchart shows the average well being of that
+    country against the global well being rate. </p>
     <div>Data:</div>
     <div><a href="http://happyplanetindex.org/">Happy planet index</a></div>
     <div id="datamap" style="position: relative; width: 700px; height: 400px;"></div>
-    <!-- <div class=barcontainer1></div> -->
-    <!-- <div position:relative; width = "100%"; height = "400px"> -->
-    <div width = "50%" height = "400px" style="float:left">
-        <svg id="barcontainer1" width = "100%" height = "400px"></svg>
+    <div class="barchart1" width="50%" height="400px" style="float:left; margin-top:100px;">
+        <svg id="barcontainer1" width="100%" height="400px"></svg>
     </div >
-    <div width = "50%" height = "400px" style="float:middle">
+    <div id="barchart2" width = "50%" height = "400px" style="float:middle; margin-top:100px;">
        <svg id="barcontainer2" width = "100%" height = "400px"></svg>
     </div>
   </body>
